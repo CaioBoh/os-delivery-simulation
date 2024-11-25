@@ -184,11 +184,17 @@ def main():
         print("Todos os argumentos devem ser números inteiros.")
         return
 
+    if not (P > A > C):
+        print("Erro: A condição P > A > C não foi atendida.")
+        print(f"Valores fornecidos: P = {P}, A = {A}, C = {C}")
+        print("Garanta que: P (encomendas) > A (espaços de carga) > C (veículos).")
+        return
+    
     # Criando os pontos de redistribuição
     pontos = [Redistribuicao(i) for i in range(1, S + 1)]
 
     # Criando os veículos
-    veiculos = [Veiculo(i, A, 0) for i in range(1, C + 1)]
+    veiculos = [Veiculo(i, A, random.randint(1, S)) for i in range(1, C + 1)]
 
     # Criando as encomendas
     encomendas = [Encomenda(i, random.randint(1, S), random.randint(1, S)) for i in range(1, P + 1)]
@@ -203,7 +209,6 @@ def main():
 
     for ponto in pontos:
         threading.Thread(target=thread_ponto, args=(ponto, pontos)).start()
-
 
 if __name__ == "__main__":
     main()
